@@ -15,3 +15,15 @@
     gap: 30px;
     row-gap: 50px;
 }
+
+.food-item-name-rating{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.food-item-name-rating p{
+    font-size: 20px;
+    font-weight: 500;
+}
