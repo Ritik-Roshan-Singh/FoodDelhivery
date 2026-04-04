@@ -3,7 +3,7 @@ import './LoginPopup.css'
 import { assets } from '../../assets/frontend_assets/assets'
 
 const LoginPopup = ({setShowLogin}) => {
-   const [currentState, setCurrentState] = useState("sign up")
+   const [currentState, setCurrentState] = useState("Login")
 
   return (
     <div className="login-popup"> 
@@ -16,11 +16,19 @@ const LoginPopup = ({setShowLogin}) => {
       <div className="login-popup-inputs">
         <input type="text"  placeholder='Your name ' required />
         <input type="email"  placeholder='Your email ' required />
-        <input type='password' placeholder='' required />
+        <input type='password' placeholder='password' required />
       </div>
-      <button>{currentState === "sign up" ? "Create Account" : "Login"}</button>
+      <button>{currentState === "Sign Up" ? "Create Account" : "Login"}</button>
+      <div className="login-popup-condition">
+        <input type="checkbox" required/>
 
+        <p>I agree to the terms & conditions</p>
 
+      </div>
+      {currentState === "Login" ?
+      <p>Create a new account? <span onClick={()=>setCurrentState("Sign Up")}>Click here</span></p> :  <p>Already have an account? <span onClick={()=>setCurrentState("Login")}>Login here</span></p> }
+      
+     
     </form>
         
 </div>  )
