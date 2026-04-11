@@ -1,9 +1,15 @@
-//logic connect with database
+// logic connect with database
 
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
- export const connectDB = async() => {
-    await mongoose.connect('mongodb+srv://ritikroshansingh06_db_user:YaRi2309@cluster0.vfvr2jd.mongodb.net/fooddelhivery').then(()=>
-        console.log("DB connected"));
+dotenv.config(); // load env variables
 
-    }
+export const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("DB connected");
+  } catch (error) {
+    console.log("DB connection error:", error);
+  }
+};
