@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import Navbarr from "./Components/Navbar/Navbarr";
-import Sidebar from "./Components/Sidebar/Sidebar";
+import Navbarr from "./components/Navbar/Navbarr";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 
 
