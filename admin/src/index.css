@@ -27,9 +27,13 @@ hr{
   display: flex;
   flex-direction: column;
   gap: 10px;
-  
+
 }
 
 .app-content{
   display: flex;
+}
+
+.cursor{
+  cursor: pointer;
 }
