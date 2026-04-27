@@ -70,7 +70,7 @@ const MyOrders = () => {
             </p>
 
             {/* Button */}
-            <button className="track-btn">
+            <button onClick={fetchOrders} className="track-btn">
               Track Order
             </button>
 
