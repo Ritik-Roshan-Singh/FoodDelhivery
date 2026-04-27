@@ -1,3 +1,31 @@
+# Frontend (Customer) — React + Vite
+
+This folder contains the customer-facing React app built with Vite.
+
+## Install & run
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview production build locally:
+
+```bash
+npm run preview
+```
+
+## Notes
+
+- The frontend uses `axios` to call the backend API. See `src/api/axiosConfig.js` for the base URL and interceptors.
+- If your backend runs on `http://localhost:4000`, the frontend should work without additional config. If your backend runs elsewhere, update `axiosConfig.js` or environment variables used by Vite.
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
