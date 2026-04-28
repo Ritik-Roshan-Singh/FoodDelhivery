@@ -1,3 +1,25 @@
+# Admin Dashboard — React + Vite
+
+This folder contains the admin dashboard used to add/remove food items and manage orders.
+
+## Install & run
+
+```bash
+cd admin
+npm install
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+## Notes
+
+- The admin app calls backend endpoints under `/api` (the backend default base is `http://localhost:4000`).
+- To upload images and manage content, use the food endpoints (see `backend/README.md`).
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

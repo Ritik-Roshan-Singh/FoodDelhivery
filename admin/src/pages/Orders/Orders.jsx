@@ -19,9 +19,13 @@ else{
 }
 }
 
+
+
 useEffect(() => {
     fetchAllOrders();
 }, [])
+
+
 
   return (
     <div className='order add'>
@@ -62,7 +66,24 @@ useEffect(() => {
             <p>
               Amount: ${order.amount} <br />
             </p>
-            <select>
+            <select value={order.status} onChange={async (e) => {
+              const newStatus = e.target.value;
+              // optimistic update
+              setOrders((prev) => prev.map((o) => o._id === order._id ? { ...o, status: newStatus } : o));
+              try{
+                const res = await axios.post(url + '/api/order/status', { orderId: order._id, status: newStatus });
+                if(res.data.success){
+                  toast.success('Status updated');
+                } else {
+                  throw new Error('Update failed');
+                }
+              } catch (err) {
+                console.error('Status update error', err);
+                toast.error('Failed to update status');
+                // revert optimistic update
+                setOrders((prev) => prev.map((o) => o._id === order._id ? { ...o, status: order.status } : o));
+              }
+            }}>
               <option value="Food Processing">Food Processing</option>
               <option value="Out for Delivery">Out for Delivery</option>
               <option value="Delivered">Delivered</option>
