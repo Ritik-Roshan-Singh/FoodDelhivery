@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from "dotenv";
+import fs from "fs";
 
 import { connectDB } from './config/db.js';
 import foodRouter from './routes/foodRoute.js';
@@ -9,6 +10,9 @@ import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
 // Load env variables FIRST
 dotenv.config();
+
+// Ensure uploads directory exists
+fs.mkdirSync('uploads', { recursive: true });
 
 //app config
 const app = express();

@@ -2,6 +2,7 @@ import express from "express";
 import { addFood, listFood, removeFood} from "../controllers/foodControllers.js";
 //image storeage system
 import multer from "multer";
+import { adminMiddleware } from "../middleware/auth.js";
 
 
 const foodRouter = express.Router();
@@ -19,9 +20,9 @@ const storage =multer.diskStorage({
 const uploads = multer({storage: storage})
 
 
-foodRouter.post("/add", uploads.single("image"), addFood)
+foodRouter.post("/add", adminMiddleware, uploads.single("image"), addFood)
 foodRouter.get("/list", listFood)
-foodRouter.post("/remove", removeFood)
+foodRouter.post("/remove", adminMiddleware, removeFood)
 
 
 

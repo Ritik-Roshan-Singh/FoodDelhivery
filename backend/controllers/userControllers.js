@@ -17,7 +17,7 @@ const loginUser = async (req, res)=>{
         if(!isMatch){
             return res.json({success: false, message: "Invalid password"})
         }
-        const token = createToken(user._id);
+        const token = createToken(user._id, user.isAdmin);
         res.json({success: true, message: "User logged in successfully", token: token});
         
     } catch (error) {
@@ -29,8 +29,9 @@ const loginUser = async (req, res)=>{
 
 }
 
-const createToken = (id)=>{
-    return jwt.sign({id}, process.env.JWT_SECRET)}
+const createToken = (id, isAdmin = false) => {
+    return jwt.sign({ id, isAdmin }, process.env.JWT_SECRET, { expiresIn: "7d" });
+}
 
 
 //register user
@@ -65,7 +66,7 @@ const registerUser = async (req, res) => {
 
         //saving user to database
         const user = await newUser.save();
-        const token = createToken(user._id);
+        const token = createToken(user._id, user.isAdmin);
          res.json({success: true, message: "User registered successfully", token: token});
 
 
