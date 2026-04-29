@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from "dotenv";
+import fs from "fs";
 
 import { connectDB } from './config/db.js';
 import foodRouter from './routes/foodRoute.js';
@@ -13,6 +14,11 @@ dotenv.config();
 //app config
 const app = express();
 const port = process.env.PORT || 4000;
+
+// Ensure uploads directory exists
+if (!fs.existsSync("uploads")) {
+    fs.mkdirSync("uploads");
+}
 
 // Global error handlers to surface startup/runtime issues in the console
 process.on('uncaughtException', (err) => {

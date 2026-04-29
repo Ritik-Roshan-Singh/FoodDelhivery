@@ -1,6 +1,7 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
+import mongoose from "mongoose";
 
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -8,6 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const placeOrder = async (req, res) => {
 const frontend_url = "http://localhost:5173";
+const delivery_charge = Number(process.env.DELIVERY_CHARGE || 2);
 
     try {
          const neworder = new orderModel({
@@ -18,8 +20,6 @@ const frontend_url = "http://localhost:5173";
          
         })
         await neworder.save();
-         // Clear user's cart after placing order
-         await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
 
             // Create a Stripe Payment Intent
             const line_items = req.body.items.map(item => ({ 
@@ -36,7 +36,7 @@ const frontend_url = "http://localhost:5173";
                     product_data:{
                         name: 'Delivery Charges'
                     },
-                    unit_amount: 2* 100, // Convert to cents
+                    unit_amount: delivery_charge * 100, // Convert to cents
                 },
                 quantity: 1,
             });
@@ -46,6 +46,8 @@ const frontend_url = "http://localhost:5173";
                 success_url: `${frontend_url}/verify?success=true&orderId=${neworder._id}`,
                 cancel_url: `${frontend_url}/verify?canceled=true&orderId=${neworder._id}`,
             });
+            // Clear user's cart only after Stripe session is successfully created
+            await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
                res.json({success:true, message:"Order Placed Successfully", session_url:session.url});
 
     } catch (error) {
@@ -57,8 +59,10 @@ const frontend_url = "http://localhost:5173";
 const verifyOrder = async (req, res) => {
     const  {orderId, success} = req.body;
     try {
-        
-        if(success == "true"){
+        if(!orderId || !mongoose.Types.ObjectId.isValid(orderId)){
+            return res.json({success:false, message:"Invalid order ID"});
+        }
+        if(success === "true" || success === true){
             await orderModel.findByIdAndUpdate(orderId, {payment: "true"});
             res.json({success:true, message:"Payment Successful"});
 
