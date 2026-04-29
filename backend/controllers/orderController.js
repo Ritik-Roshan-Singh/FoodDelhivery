@@ -35,7 +35,7 @@ const frontend_url = "http://localhost:5173";
                     product_data:{
                         name: 'Delivery Charges'
                     },
-                    unit_amount: (process.env.DELIVERY_CHARGE || 2) * 100, // Convert to cents
+                    unit_amount: Number(process.env.DELIVERY_CHARGE || 2) * 100, // Convert to cents
                 },
                 quantity: 1,
             });
@@ -61,7 +61,7 @@ const verifyOrder = async (req, res) => {
     const  {orderId, success} = req.body;
 
     if(!orderId || !mongoose.Types.ObjectId.isValid(orderId)){
-        return res.json({success:false, message:"Invalid order ID"});
+        return res.status(400).json({success:false, message:"Invalid order ID"});
     }
 
     try {

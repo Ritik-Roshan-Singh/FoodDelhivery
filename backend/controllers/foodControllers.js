@@ -7,10 +7,10 @@ import fs from "fs";
 const addFood= async(req, res) => {
 
     if(!req.body.name || req.body.name.trim() === ""){
-        return res.json({success: false, message: "Food name is required"})
+        return res.status(400).json({success: false, message: "Food name is required"})
     }
     if(!req.body.price || Number(req.body.price) <= 0){
-        return res.json({success: false, message: "Price must be a positive number"})
+        return res.status(400).json({success: false, message: "Price must be a positive number"})
     }
 
     let image_filename = `${req.file.filename}`;
