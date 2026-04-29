@@ -15,7 +15,7 @@ const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
 
   // Base URL for building image src. Use env var if available.
-  const url =  "http://localhost:4000";
+  const url =  "https://fooddelhivery-backend.onrender.com"
   const [token, setToken] = useState("");
 
   const [food_list, setFoodList] = useState([]);
